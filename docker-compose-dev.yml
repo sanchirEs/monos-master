@@ -1,0 +1,23 @@
+version: "3.6"
+# manage.py runserver 0.0.0.0:8000
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    
+    # entrypoint: ["./wait.sh"]
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+  db:
+    image: mysql:5.7.24
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Gtyhnbv567&^%
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    

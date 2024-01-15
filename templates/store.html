@@ -1,0 +1,497 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>RxBOT</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta content="Monos, RxBOT" name="description">
+        <meta content="Coderthemes" name="author">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/rxbotlogo2.png' %}">
+
+        <!--Morris Chart CSS -->
+        <link rel="stylesheet" href="{% static 'assets/plugins/morris/morris.css' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/magnific-popup.css' %}" rel="stylesheet" type="text/css">
+        
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <header id="topnav">
+            <div class="topbar-main">
+                <div class="container-fluid">
+
+                    <!-- Logo container-->
+                    <div class="logo">
+                        <!-- Text Logo -->
+                        <!--<a href="index.html" class="logo">-->
+                            <!--<span class="logo-small"><i class="mdi mdi-radar"></i></span>-->
+                            <!--<span class="logo-large"><i class="mdi mdi-radar"></i> Adminto</span>-->
+                        <!--</a>-->
+                        <!-- Image Logo -->
+                        <a href="/" class="logo">
+                            <img src="{% static 'assets/images/rxbotlogo2.png' %}" height="50"> RxBot
+                        </a>
+
+                    </div>
+                    <!-- End Logo container-->
+
+
+                    <div class="menu-extras topbar-custom">
+
+                        <ul class="list-unstyled topbar-right-menu float-right mb-0">
+
+                            <li class="menu-item">
+                                <!-- Mobile menu toggle-->
+                                <a class="navbar-toggle nav-link">
+                                    <div class="lines">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </a>
+                                <!-- End mobile menu toggle-->
+                            </li>
+                            
+                            <li>
+                                <!-- Notification -->
+                                <div class="notification-box">
+                                    <ul class="list-inline mb-0">
+                                        <li>
+                                            <a href="javascript:void(0);" class="right-bar-toggle">
+                                                <i class="mdi mdi-bell-outline noti-icon"></i>
+                                            </a>
+                                            <div class="noti-dot">
+                                                <span class="dot"></span>
+                                                <span class="pulse"></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- End Notification bar -->
+                            </li>
+
+                            <li class="dropdown notification-list">
+                                <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <img src="{{rx_manager.avatar_link}}" alt="user" class="rounded-circle"/>
+                                    <small>&nbsp;&nbsp;{{rx_manager.fullname}}</small>   
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+
+                                    <!-- item-->
+                                    <a href="#" class="dropdown-item notify-item" data-toggle="modal" data-target="#ProfileModal">
+                                        <i class="ti-user m-r-5"></i> Миний данс
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="ti-settings m-r-5"></i> Тохиргоо
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="/logout" class="dropdown-item notify-item">
+                                        <i class="ti-power-off m-r-5"></i> Гарах
+                                    </a>
+
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- end menu-extras -->
+
+                    <div class="clearfix"></div>
+
+                </div> <!-- end container -->
+            </div>
+            <!-- end topbar-main -->
+
+            <div class="navbar-custom">
+                <div class="container-fluid">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li class="has-submenu">
+                                <a href="/"><i class="mdi mdi-view-dashboard"></i> <span> Ерөнхий </span> </a>
+                            </li>
+                            
+                            <li class="has-submenu">
+                                <a href="/ranking"><i class="mdi mdi-view-list"></i> <span> Жагсаалт </span> </a>
+                            </li>
+							
+							<li class="has-submenu active">
+                                <a href="/store" class="active"><i class="mdi mdi-cart"></i> <span> Дэлгүүр </span> </a>
+                            </li>
+                            <li class="has-submenu pull-right">
+                                <a href="https://monos.workplace.com/chat/t/100017564912414" target="_ws"><img src="/static/assets/images/fbmsg.png" width="30px"/> <span> Өөр урамшуулал хүсч байна уу? Зурвас илгээнэ үү. </span> </a>
+                            </li>
+                        </ul>
+                        <!-- End navigation menu -->
+                    </div> <!-- end #navigation -->
+                </div> <!-- end container -->
+            </div> <!-- end navbar-custom -->
+            <nav style="border-top:1px solid #ddd;padding:10px 10px 10px 50px;" id="catmenu">
+                <a class="p-2 text-muted" href='/store' title=""><b>БҮГД</b></a>
+                {% for cat in categories %}
+                    <a class="p-2 text-muted" href='#' title="{{cat.id}}" onclick="Javascript:page=1;loaditems({{cat.id}},1,this);">{{cat.category_name}}</a> 
+                {% endfor %}
+                    <button class="btn btn-small btn-default dropdown-toggle" type="button" data-toggle="dropdown">Эрэмблэх
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                          <li><a href="#" onclick="Javascript:page=1;loaditems(null,1,this,'item_date',1);">&nbsp;&nbsp;Огноо (Сүүлийн)</a></li>
+                          <li><a href="#" onclick="Javascript:page=1;loaditems(null,1,this,'item_date',0);">&nbsp;&nbsp;Огноо (Анхны)</a></li>
+                          <li><a href="#" onclick="Javascript:page=1;loaditems(null,1,this,'item_price',1);">&nbsp;&nbsp;Үнэ (Их)</a></li>
+                          <li><a href="#" onclick="Javascript:page=1;loaditems(null,1,this,'item_price',0);">&nbsp;&nbsp;Үнэ (Бага)</a></li>
+                          <li><a href="#" onclick="Javascript:page=1;loaditems(null,1,this,'sold_count',1);">&nbsp;&nbsp;Эрэлт (Их)</a></li>
+                          <li><a href="#" onclick="Javascript:page=1;loaditems(null,1,this,'sold_count',0);">&nbsp;&nbsp;Эрэлт (Бага)</a></li>
+                    </ul>
+                    <a href="#" class="p-2" data-toggle="modal" data-target="#HistoryModal" onclick="saledata();"><span class="pull-right"><i class="mdi mdi-history"></i> Худалдан авалтын түүх</span></a>
+                    <a href="#" class="p-2"><span id="profilebalance" class="price-text-color pull-right" style="padding-right:20px;cursor:default;color:#ff5b5b;font-size:18px;">Таны дансанд: <span style="color:#000000;">{{rx_coin_balance}}</span> <img src="/static/assets/images/moil.png" width=40 /></b></span></a>
+            </nav>
+        </header>
+        <!-- End Navigation Bar-->
+
+
+        <div class="wrapper">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <br/>
+                        <br/>
+                        <br/>
+                       
+                    </div>
+                </div>
+                
+                        <div class="row" id="item-container">
+                            
+                        </div>
+                        <!-- end row -->
+
+            </div> <!-- end container -->
+
+            <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="DetailModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="DetailModalLabel"><i class="fa fa-list"></i> Дэлгэрэнгүй</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <span id="item_detail"></span>
+                        </div>
+
+                      </div>
+                    </div>
+            </div>
+            <div class="modal fade" id="BuyModal" tabindex="-1" role="dialog" aria-labelledby="BuyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="BuyModalLabel"><i class="fa fa-shopping-cart"></i> Худалдаж авах</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" id="item_id" value="">
+                                <div id="itembody">
+                                    <span id="item_name" style="font-size:18px;"></span>
+                                    <hr/>
+                                        <div>
+                                        Таны дансанд: <span id="current_balance" class="pull-right" style="font-size:16px;">{{rx_coin_balance}}</span>
+                                        </div>
+                                        <br>
+                                        <div>
+                                        Барааны үнэ: <span id="item_price" class="pull-right" style="font-size:16px;">12</span>
+                                        </div>
+                                        <br>
+                                        <div>
+                                        Дансанд үлдэх: <span id="balance" class="pull-right" style="font-size:16px;color:#37A12B;">12</span>
+                                        </div>
+                                        <br/>
+                                </div>
+                                <div id="successmessage" class="alert alert-success">
+                                   
+                                </div>
+                                <div id="errormessage" class="alert alert-danger">
+                                   
+                                </div>
+                            </div>
+                            <div class="modal-footer"> 
+                                <button type="button" class="btn btn-primary" id="buyitem">Баталгаажуулах</button> 
+                                <button type="button" class="btn btn-secondary" id="closeitem" data-dismiss="modal">Цуцлах</button> 
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal fade" id="HistoryModal" tabindex="-1" role="dialog" aria-labelledby="HistoryModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="HistoryModalLabel"><i class="mdi mdi-history"></i> Худалдан авалтууд</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table" id="Historytable">
+                                    </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+            <!-- Right Sidebar -->
+            <div class="side-bar right-bar">
+                <a href="javascript:void(0);" class="right-bar-toggle">
+                    <i class="mdi mdi-close-circle-outline"></i>
+                </a>
+                <h4 class="">Мэдэгдэл</h4>
+                <div class="notification-list nicescroll">
+                    <ul class="list-group list-no-border user-list">
+                        
+                        <li class="list-group-item">
+                            <a href="#" class="user-list-item">
+                                <div class="icon bg-pink">
+                                    <i class="mdi mdi-comment"></i>
+                                </div>
+                                <div class="user-desc">
+                                    <span class="name"></span>
+                                    <span class="desc"></span>
+                                    <span class="time"></span>
+                                </div>
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /Right-bar -->
+
+        </div>
+        <!-- end wrapper -->
+
+        <div class="modal fade" id="ProfileModal" tabindex="-1" role="dialog" aria-labelledby="ProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="ProfileModalLabel"><i class="fa fa-list"></i> Дэлгэрэнгүй</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Овог нэр: {{rx_manager.fullname}}<br/>
+                  Албан тушаал: {{rx_manager.title}}<br/>
+                  Хэлтэс/Газар: {{rx_manager.department}}<br/>
+                  Имэйл: {{rx_manager.email}}<br/>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        2018 © Монос Фарм Трэйд
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+
+
+
+        <!-- jQuery  -->
+        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+        <script src="{% static 'assets/js/popper.min.js' %}"></script>
+        <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'assets/js/waves.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+
+        <script src="{% static 'assets/js/modernizr.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+        <!-- KNOB JS -->
+        <!--[if IE]>
+        <script type="text/javascript" src="assets/plugins/jquery-knob/excanvas.js"></script>
+        <![endif]-->
+        <script src="{% static 'assets/plugins/jquery-knob/jquery.knob.js' %}"></script>
+
+
+        <!-- Dashboard init -->
+
+        <!-- App js -->
+        <script src="{% static 'assets/js/jquery.core.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.app.js' %}"></script>
+
+        <script>
+                function setItem(b, c, name){
+
+                        $("#item_name").html(name);
+
+                    $("#item_price").html(b);
+                    $("#item_id").val(c);
+                    var i=parseInt($("#current_balance").html());
+                    $("#balance").html(i-b);
+                    $("#successmessage").hide();
+                    $("#errormessage").hide();
+                    $("#itembody").show();
+                    $("#buyitem").show();
+                    $("#closeitem").text("Цуцлах");
+                }
+                function setDetail(e){
+                    $("#item_detail").html(e.title);
+                }
+                var page=1, currentcat=0, pagecount=0, itemorder, itemsort;
+                function loaditems(cat, more, ev, order=null, sort=null){
+                    if(more==1){
+                        $("#catmenu>a.text-muted").removeClass("text-muted");
+                        $("#catmenu>a").addClass("text-muted");
+                        $(ev).removeClass("text-muted");
+                        
+                        $("#item-container" ).html("<div style=\"width:100%;text-align:center\"><img src=\"/static/assets/images/loading_cart.gif\" style=\"width:200px;height:150px\"/></div>");
+                       
+                    }
+                    if(order!=null) itemorder=order;
+                    if(sort!=null) itemsort=sort;
+                    var url="/store/items";
+                    if(cat!=null) currentcat=cat;
+                    if(currentcat>0) url+="?category="+currentcat+"&page="+page;
+                    else url+="?page="+page;
+                    url+="&order="+itemorder+"&sort="+itemsort;
+                    $.getJSON(url)
+                                .done(function( data ) {
+                                    page=data.page;
+                                    pagecount=data.pagecount;
+                                    if(more==1) $("#item-container" ).html("");
+                                    $.each( data.items, function( i, item ) {
+                                        var desc, name;
+                                        name=item.item_name;
+                                        name=name.replace("\"","'");
+                                        desc=item.item_desc;
+                                        desc=desc.replace("\"","'");
+                                        var d = new Date(item.created_date);
+                                        var today = new Date();
+                                        var newdate = new Date();
+                                        newdate.setDate(today.getDate()-14);
+                                        var newTag="";
+                                        if(d>newdate) newTag='<span class="round-tag">Шинэ</span>';
+                                        $("#item-container" ).append('<div class="col-xl-2 col-md-2">'+
+                                                '<div class="card-box">'+
+                                                    '<div class="post-img-content">'+
+                                                        '<a class="popupper" href="/media/'+item.item_icon+'"><img src="/media/'+item.item_icon+'" class="img-responsive" /></a>'+
+                                                        newTag+
+                                                    '</div>'+
+                                                    '<div class="info">'+
+                                                    '<div class="row">'+
+                                                            '<div class="price col-md-12">'+
+                                                                item.item_name+
+                                                                '<h4 class="price-text-color pull-right">'+item.item_price+'  <img src=\"/static/assets/images/moil.png\" width=30 /></h4>'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                        '<div class="separator clear-left">'+
+                                                            '<p class="btn-add">'+
+                                                                '<a href="#" class="hidden-sm" title="'+name+'" data-toggle="modal" data-target="#BuyModal" onclick="Javascript:setItem('+item.item_price+','+item.id+',\''+name+'\');"><i class="fa fa-shopping-cart"></i> Авах</a></p>'+
+                                                            '<p class="btn-details">'+
+                                                                '<a href="#" class="hidden-sm" data-toggle="modal" data-target="#DetailModal" title="'+desc+'" onclick="Javascript:setDetail(this);"><i class="fa fa-list"></i> <small>Цааш</small></a></p>'+
+                                                    '</div>'+
+                                                        '<div class="clearfix">'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>');
+                                        });
+                                    $('.popupper').magnificPopup({
+                                        type:'image'
+                                    });
+                    });
+                }
+
+                loaditems(0,1,this,'item_date',1); 
+                $(window).scroll(function() {
+                    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                        if(page<pagecount){
+                            page++;
+                            loaditems(currentcat, 0, null, itemorder, itemsort);
+                        }
+                    }
+                 });
+                 $("#buyitem").click(function() {
+                     if(parseInt($("#balance").html())>=0){
+                        $("#buyitem").hide();
+                        $.ajax({
+                            type: 'POST',
+                            url: '/store/buy',
+                            data: JSON.stringify({
+                                item:$("#item_id").val(), amount:1
+                            }),  
+                            success: function(response){
+                                if(response.status==200){
+                                    $("#buyitem").hide();
+                                    $("#successmessage").hide();
+                                    $("#errormessage").hide();
+                                    $("#successmessage").text("Худалдан авалт амжилттай. Та захиалгын түүх хэсгээс амжилттай захиалгуудаа хараарай.");
+                                    $("#successmessage").show();
+                                    $("#item_name").html(event.target.title);
+                                    $("#current_balance").html($("#balance").html());;
+                                    $("#itembody").hide();
+                                    $("#closeitem").text("Дуусгах");
+                                    $("#profilebalance").html("Таны дансанд: <span style=\"color:#000000;\">"+$("#balance").html()+"</span> <img src=\"/static/assets/images/moil.png\" width=40 /></b>");
+                                }else
+                                {
+                                    $("#errormessage").text(response.readable_response);
+                                    $("#errormessage").show();
+                                }
+                                
+                            }
+                        });
+                     }else{
+                        $("#errormessage").text("Таны дансны үлдэгдэл мойл хүрэлцэхгүй байна.");
+                        $("#errormessage").show();
+                     }
+                    
+                    
+                  });
+                  var salepage, salepagecount;
+
+                  function saledata(){
+                    $.getJSON("/store/salesdata")
+                    .done(function( data ) {
+                        salepage=data.page;
+                        salepagecount=data.pagecount;
+                        $("#Historytable").html("");
+                        $.each( data.sales_data, function( i, item ) {
+                            $("#Historytable").append("<tr><td>"+item.created_date+"</td><td>"+item.item__item_name+"</td><td>"+item.total+"</td><td>"+(item.status==1?"<span class=\"text-warning\">Захиалсан</span>":"<span class=\"text-success\">Хүргэгдсэн</span>")+"</td></tr>");
+                        });
+                    });
+                  }
+                 
+        
+            </script>
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115739930-1"></script>
+            <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-115739930-1');
+            </script>
+    </body>
+</html>

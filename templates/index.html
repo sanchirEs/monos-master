@@ -1,0 +1,550 @@
+﻿{% load static %}
+{% load common_filters %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>RxBOT</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta content="Monos, RxBOT" name="description">
+        <meta content="Coderthemes" name="author">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/rxbotlogo2.png' %}">
+
+        <!--Morris Chart CSS -->
+        <link rel="stylesheet" href="{% static 'assets/plugins/morris/morris.css' %}">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+        <script src="{% static 'assets/js/modernizr.min.js' %}"></script>
+
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <header id="topnav">
+            <div class="topbar-main">
+                <div class="container-fluid">
+
+                    <!-- Logo container-->
+                    <div class="logo">
+                        <!-- Text Logo -->
+                        <!--<a href="index.html" class="logo">-->
+                            <!--<span class="logo-small"><i class="mdi mdi-radar"></i></span>-->
+                            <!--<span class="logo-large"><i class="mdi mdi-radar"></i> Adminto</span>-->
+                        <!--</a>-->
+                        <!-- Image Logo -->
+                        <a href="/" class="logo">
+                            <img src="{% static 'assets/images/rxbotlogo2.png' %}" height="50"> RxBot
+                        </a>
+
+                    </div>
+                    <!-- End Logo container-->
+
+
+                    <div class="menu-extras topbar-custom">
+
+                        <ul class="list-unstyled topbar-right-menu float-right mb-0">
+
+                            <li class="menu-item">
+                                <!-- Mobile menu toggle-->
+                                <a class="navbar-toggle nav-link">
+                                    <div class="lines">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </a>
+                                <!-- End mobile menu toggle-->
+                            </li>
+                            
+                            <li>
+                                <!-- Notification -->
+                                <div class="notification-box">
+                                    <ul class="list-inline mb-0">
+                                        <li>
+                                            <a href="javascript:void(0);" class="right-bar-toggle">
+                                                <i class="mdi mdi-bell-outline noti-icon"></i>
+                                            </a>
+                                            <div class="noti-dot">
+                                                <span class="dot"></span>
+                                                <span class="pulse"></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- End Notification bar -->
+                            </li>
+
+                            <li class="dropdown notification-list">
+                                <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <img src="{{rx_manager.avatar_link}}" alt="user" class="rounded-circle"/>
+                                    <small>&nbsp;&nbsp;{{rx_manager.fullname}}</small>  
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+
+                                    <!-- item-->
+                                    <a href="#" class="dropdown-item notify-item" data-toggle="modal" data-target="#ProfileModal">
+                                        <i class="ti-user m-r-5"></i> Миний данс
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="/change_password" class="dropdown-item notify-item">
+                                        <i class="ti-settings m-r-5"></i> Нууц үг солих
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="/logout" class="dropdown-item notify-item">
+                                        <i class="ti-power-off m-r-5"></i> Гарах
+                                    </a>
+
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- end menu-extras -->
+
+                    <div class="clearfix"></div>
+
+                </div> <!-- end container -->
+            </div>
+            <!-- end topbar-main -->
+
+            <div class="navbar-custom">
+                <div class="container-fluid">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li class="has-submenu active">
+                                <a href="/"><i class="mdi mdi-view-dashboard"></i> <span> Ерөнхий </span> </a>
+                            </li>
+                            
+                            <li class="has-submenu">
+                                <a href="/ranking"><i class="mdi mdi-view-list"></i> <span> Жагсаалт </span> </a>
+                            </li>
+							
+							<li class="has-submenu">
+                                <a href="/store"><i class="mdi mdi-cart"></i> <span> Дэлгүүр </span> </a>
+                            </li>
+
+                            
+                        </li></ul>
+                        <!-- End navigation menu -->
+                    </div> <!-- end #navigation -->
+                </div> <!-- end container -->
+            </div> <!-- end navbar-custom -->
+        </header>
+        <!-- End Navigation Bar-->
+
+
+        <div class="wrapper">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <br/>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+
+                <div class="row">
+
+                    <div class="col-xl-4 col-md-4">
+                        <div class="card-box">
+
+
+                            <h4 class="header-title mt-0 m-b-30">XP</h4>
+
+                            <div class="widget-chart-1">
+                                <div class="widget-detail-2">
+									
+                                    <h2 class="mb-0">  {{rx_manager.rx_xp}} XP</h2>
+									
+                                    <p class="text-muted" style="margin-top: 20px !important;"> Энэ 7 хоногт {{rx_manager.rx_weekly_xp}}XP цуглуулсан
+									<span class="badge badge-success badge-pill m-t-20">{{rx_manager.rx_weekly_xp|percent:rx_manager.rx_xp}}% <i class="mdi mdi-trending-up"></i> </span>
+									</p>
+									
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-xl-4 col-md-4">
+                        <div class="card-box">
+
+
+                            <h4 class="header-title mt-0 m-b-30">Level</h4>
+
+                            <div class="widget-box-1">
+                                <div class="widget-detail-2">
+                                    <h2 class="mb-0">  {{rx_manager.rx_level}}</h2>
+                                    
+                                    <p class="text-muted m-b-25">Одоо</p>
+                                </div>
+								<div class="text-muted" style="text-align:right;">Level {{rx_manager.rx_level|add:1}} хүрэхэд {{rx_manager.rx_xp|xp_to_nextlevel:rx_manager.rx_level}} XP хэрэгтэй</div>
+                                <div class="progress progress-bar-success-alt progress-sm mb-0">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{rx_manager.rx_xp|xp_to_percent:rx_manager.rx_level}}" aria-valuemin="0" aria-valuemax="100" style="width: {{rx_manager.rx_xp|xp_to_percent:rx_manager.rx_level}}%;">
+                                        <span class="sr-only">{{rx_manager.rx_xp|xp_to_percent:rx_manager.rx_level}}% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-xl-4 col-md-4">
+                        <div class="card-box">
+                            
+
+                            <h4 class="header-title mt-0 m-b-30">МОЙЛ</h4>
+
+                            <div class="widget-chart-1">
+                                <div class="widget-chart-box-1">
+                                    <img src="/static/assets/images/moil.png" width=100 />
+                                </div>
+                                <div class="widget-detail-1">
+                                    <h2 class="p-t-10 mb-0"> {{rx_manager.rx_coin_balance}} </h2>
+                                    <p class="text-muted m-b-10">Level {{rx_manager.rx_level|add:1}} хүрвэл {{rx_manager.rx_level|reward}} мойл цуглуулна</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                    
+
+                </div>
+                <!-- end row -->
+
+                <div class="row">
+                    
+
+                    <div class="col-xl-4">
+                        <div class="card-box">
+                            
+                            <h4 class="header-title mt-0">Хөтөлбөрөөс XP цуглуулалт</h4>
+                            <div id="morris-bar-example" style="height: 280px;"></div>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-xl-4">
+                        <div class="card-box">
+                            
+                            <h4 class="header-title mt-0">XP өсөлт</h4>
+                            <div id="morris-line-example" style="height: 280px;"></div>
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col-xl-4">
+                        <div class="card-box">
+                            
+    
+                            <h4 class="header-title mt-0">МОЙЛ</h4>
+    
+                            <div class="widget-chart text-center">
+                                <div id="morris-donut-example" style="height: 245px;"></div>
+                                <ul class="list-inline chart-detail-list mb-0">
+                                    <li class="list-inline-item">
+                                        <h5 style="color: #10c469;"><i class="fa fa-circle m-r-5"></i>Цуглуулсан</h5>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <h5 style="color: #ff8acc;"><i class="fa fa-circle m-r-5"></i>Зарцуулсан</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                </div>
+                <!-- end row -->
+                
+
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card-box widget-user">
+                            <div id="top_advice">
+                                
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card-box widget-user">
+                            <div id="top_comment">
+                                
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card-box widget-user">
+                            <div id="top_test">
+                                
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card-box widget-user">
+                            <div id="top_like">
+                                
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                </div>
+                <!-- end row -->
+
+
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="card-box">                    
+                            <h4 class="header-title mt-0"><img src="/static/assets/images/badge_rank.png"/> Шилдэг сурагчдын рэйтинг <small><a href="/ranking" class="pull-right">бүх жагсаалт>></a></small></h4>
+                            <div class="inbox-widget nicescroll" style="height: 350px;" id="power_ranking">                            
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col-xl-2">
+                        <div class="card-box">
+                            <h4 class="header-title mt-0 m-b-30">Hashtags</h4>
+                            <div id="hashtags"></div>
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col-xl-6">
+                        <div class="card-box">
+                            <h4 class="header-title mt-0 m-b-30">Шинэ материалууд</h4>
+                                <ul class="list-group list-no-border user-list" id="newposts">
+                                    
+                                </ul>
+                        </div>
+                    </div><!-- e
+                </div>
+                <!-- end row -->
+
+            </div> <!-- end container -->
+            <div class="modal fade" id="ProfileModal" tabindex="-1" role="dialog" aria-labelledby="ProfileModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="ProfileModalLabel"><i class="fa fa-list"></i> Дэлгэрэнгүй</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Овог нэр: {{rx_manager.fullname}}<br/>
+                      Албан тушаал: {{rx_manager.title}}<br/>
+                      Хэлтэс/Газар: {{rx_manager.department}}<br/>
+                      Имэйл: {{rx_manager.email}}<br/>
+                    </div>
+    
+                  </div>
+                </div>
+              </div>
+
+            <!-- Right Sidebar -->
+            <div class="side-bar right-bar">
+                <a href="javascript:void(0);" class="right-bar-toggle">
+                    <i class="mdi mdi-close-circle-outline"></i>
+                </a>
+                <h4 class="">Мэдэгдэл</h4>
+                <div class="notification-list nicescroll">
+                    <ul class="list-group list-no-border user-list">
+                        
+                        <li class="list-group-item">
+                            <a href="#" class="user-list-item">
+                                <div class="icon bg-pink">
+                                    <i class="mdi mdi-comment"></i>
+                                </div>
+                                <div class="user-desc">
+                                    <span class="name"></span>
+                                    <span class="desc"></span>
+                                    <span class="time"></span>
+                                </div>
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /Right-bar -->
+
+        </div>
+        <!-- end wrapper -->
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        2018 © Монос Фарм Трэйд
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+
+
+
+        <!-- jQuery  -->
+        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+        <script src="{% static 'assets/js/popper.min.js' %}"></script>
+        <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'assets/js/waves.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+
+        <!-- KNOB JS -->
+        <!--[if IE]>
+        <script type="text/javascript" src="assets/plugins/jquery-knob/excanvas.js"></script>
+        <![endif]-->
+        <script src="{% static 'assets/plugins/jquery-knob/jquery.knob.js' %}"></script>
+
+        <!--Morris Chart-->
+        <script src="{% static 'assets/plugins/morris/morris.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/raphael/raphael-min.js' %}"></script>
+
+        <!-- Dashboard init -->
+        
+
+		<script>
+              (function() {
+                          $.getJSON("/rxmanager/top_users")
+                            .done(function( data ) {
+                                $("#power_ranking" ).html("");
+                                $("#top_advice").html('<img src="'+data.top_advice.avatar_link+'" class="img-responsive rounded-circle" alt="user">'+
+                                    '<div class="wid-u-info">'+
+                                    '<h5 class="mt-0 m-b-5">'+data.top_advice.last_name+' '+data.top_advice.first_name+'</h5>'+
+                                    '<p class="text-muted m-b-5 font-13">'+data.top_advice.title+', '+data.top_advice.department+'</p>'+
+                                    '<small class="text-success"><b>Шилдэг зөвлөгч</b></small></div>');
+                                $("#top_test").html('<img src="'+data.top_test.avatar_link+'" class="img-responsive rounded-circle" alt="user">'+
+                                    '<div class="wid-u-info">'+
+                                    '<h5 class="mt-0 m-b-5">'+data.top_test.last_name+' '+data.top_test.first_name+'</h5>'+
+                                    '<p class="text-muted m-b-5 font-13">'+data.top_test.title+', '+data.top_test.department+'</p>'+
+                                    '<small class="text-success"><b>Шилдэг мэргэжилтэн</b></small></div>');
+                                $("#top_comment").html('<img src="'+data.top_comment.avatar_link+'" class="img-responsive rounded-circle" alt="user">'+
+                                    '<div class="wid-u-info">'+
+                                    '<h5 class="mt-0 m-b-5">'+data.top_comment.last_name+' '+data.top_comment.first_name+'</h5>'+
+                                    '<p class="text-muted m-b-5 font-13">'+data.top_comment.title+', '+data.top_comment.department+'</p>'+
+                                    '<small class="text-success"><b>Шилдэг идэвхтэн</b></small></div>');
+                                $("#top_like").html('<img src="'+data.top_like.avatar_link+'" class="img-responsive rounded-circle" alt="user">'+
+                                    '<div class="wid-u-info">'+
+                                    '<h5 class="mt-0 m-b-5">'+data.top_like.last_name+' '+data.top_like.first_name+'</h5>'+
+                                    '<p class="text-muted m-b-5 font-13">'+data.top_like.title+', '+data.top_like.department+'</p>'+
+                                    '<small class="text-success"><b>Шилдэг дэмжигч</b></small></div>');
+                                    var rank=1;
+                              $.each( data.top_xp_users.users, function( i, item ) {
+                                $("#power_ranking" ).append('<a href="#">'+
+                                        '<div class="inbox-item">'+
+                                            '<h3 class="pull-left" style="margin-right:10px">#'+rank+'</h3>'+
+                                            '<div class="inbox-item-img"><img src="'+item.avatar_link+'" class="rounded-circle" alt=""></div>'+
+                                            '<p class="pull-right">'+item.order_xp+' XP</p>'+
+                                            '<p class="inbox-item-author">'+item.last_name+' '+item.first_name+'</p>'+
+                                            '<p class="inbox-item-text">'+item.title+', '+item.department+'</p>'+
+                                        '</div></a>');
+                                        rank++;
+                              });
+                            });
+                        })();
+        var bardata=[];
+        var linedata=[];
+        $.getJSON("/rxmanager/")
+            .done(function( data ) {
+                $.each( data.last_six_campaign, function( i, item ) {
+                    var single_bar={};
+            
+                    single_bar["y"]=item.campaign;
+                    single_bar["a"]=item.xp_total;
+                    bardata.push(single_bar);
+                });
+                $.each( data.last_six_week, function( i, item ) {
+                    var single_line={};
+
+                    single_line["month"]=item.date;
+                    single_line["value"]=item.rx_weekly_xp;
+        
+                    linedata.push(single_line);
+                });
+                new Morris.Line({
+                    // ID of the element in which to draw the chart.
+                    element: 'morris-line-example',
+                    // Chart data records -- each entry in this array corresponds to a point on
+                    // the chart.
+                    data: linedata,
+                    // The name of the data record attribute that contains x-values.
+                    xkey: 'month',
+                    // A list of names of data record attributes that contain y-values.
+                    ykeys: ['value'],
+                    // Labels for the ykeys -- will be displayed when you hover over the
+                    // chart.
+                    labels: ['XP'],
+                    
+                    lineColors:['#10c469']
+                });
+              
+                new Morris.Bar({
+                    element: 'morris-bar-example',
+                    data: bardata,
+                    xkey: 'y',
+                    ykeys: 'a',
+                    labels: 'Авсан XP'
+                });
+                Morris.Donut({
+                    element: 'morris-donut-example',
+                    data: [
+                      {label: "Цуглуулсан", value: data.rx_manager.rx_coin_collected},
+                      {label: "Зарцуулсан", value: data.rx_manager.rx_coin_consumed}
+                    ],
+                    colors:['#10c469','#ff8acc']
+                });
+        });
+        $.getJSON("/campaign/hashes")
+            .done(function( data ) {
+                $.each( data, function( i, item ) {
+                    var d = new Date(item[1]);
+                    var today = new Date();
+                    var newdate = new Date();
+                    newdate.setDate(today.getDate());
+                    if(d>=newdate) $("#hashtags").append('<a target="_ws" href="https://monos.workplace.com/groups/154243908530765/search/?query='+item[0].replace("#","")+'">'+item[0]+'</a><br/>');
+                    else $("#hashtags").append('<a target="_ws" href="https://monos.workplace.com/groups/154243908530765/search/?query='+item[0].replace("#","")+'"><span style="color:#98a6ad">'+item[0]+'</span></a><br/>');
+                    
+                });
+        });
+        $.getJSON("/post/recentposts")
+            .done(function( data ) {
+                $.each( data, function( i, item ) {
+                    $("#newposts").append('<li class="list-group-item">'+
+                        '<a href="#" class="user-list-item">'+
+                            '<div class="icon bg-pink">'+
+                                '<img src="'+item.image_url+'" style="width:30px" class="img-responsive rounded-circle" alt="user">'+
+                            '</div>'+
+                           ' <div class="user-desc">'+
+                                '<span class="name"><a target="_ws" href="'+item.post_url+'">'+(item.post_name.toString().length>250?item.post_name.toString().substring(0,250):item.post_name)+'</a></span>'+
+                                '<span class="desc"></span>'+
+                                '<br/><span class="time"><small>'+item.created_date+'</small></span>'+
+                            '</div>'+
+                       ' </a>'+
+                    '</li>');
+                });
+        });
+		</script>
+        <!-- App js -->
+        <script src="{% static 'assets/js/jquery.core.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.app.js' %}"></script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115739930-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-115739930-1');
+        </script>
+
+    </body>
+</html>

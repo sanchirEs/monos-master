@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>Your Website Title</title>
+    <!-- You can use Open Graph tags to customize link previews.
+    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+  <meta property="og:url"           content="https://moilbot.monos.mn/" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Your Website Title" />
+  <meta property="og:description"   content="Your description" />
+  <meta property="og:image"         content="https://www.moilbot.monos.mn/static/assets/images/rxbotlogo2.png" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body onload="fbEnsureInit()">
+    <script>
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '2085887675074336',
+                xfbml      : true,
+                version    : 'v2.0'
+            });
+            fbApiInit = true; //init flag
+
+        };
+
+        function fbEnsureInit() {
+            if(!window.fbApiInit) {
+                setTimeout(function() {fbEnsureInit();}, 50);
+            } else {
+                $('#sharebutton').click();
+                share();
+            }
+        }
+
+        function share(){
+
+            FB.ui({
+                method: 'share',
+                href: '{{url}}',
+                }, function(response) {
+
+                    if (response != undefined && !('error_code' in response)) {
+                        // alert('Post was published.');
+                        $.ajax({
+                            url : 'https://moilbot.monos.mn/mobile/share',
+                            method : 'POST',
+                            headers: {
+                                "Authorization":"Bearer " + $('[name=token]').val(),
+                            },
+                            data : {
+                                'notification_id' : $('[name=notification_id]').val(),
+                                'has_campaign' : $('[name=has_campaign]').val(),
+                            }
+                        }).done(function(response){
+                            window.location.href='moilbot://';
+                        });
+                    }else{
+                        window.location.href='moilbot://';
+                    }
+                });
+
+        }
+        
+        
+    </script>
+
+  <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <input type="hidden" value="{{notification_id}}" name="notification_id" />
+    <input type="hidden" value="{{has_campaign}}" name="has_campaign" />
+    <input type="hidden" value="{{token}}" name="token" />
+    <!-- <input type="button" value="share button" onclick="share()" id="sharebutton"/> -->
+    <div id="share" onclick="share()" style="width: 100%; height: 100%;"><img width="100%" src="http://chittagongit.com/images/facebook-share-icon-png/facebook-share-icon-png-9.jpg"/></div>
+</body>
+</html>
